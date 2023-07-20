@@ -4,6 +4,14 @@
   padding: 0;
 }
 
+:root {
+  --black: #1A1D23;
+  --pink: #FF57B2;
+  --white: #F8F8F8;
+  --gray-200: #BBBBBB;
+  --gray-50: #D7D7D7;
+}
+
 html {
   @media (max-width: 1080px) { 
     font-size: 93.75%; //15px
@@ -15,6 +23,7 @@ html {
 }
 
 body {
+  background-color: var(--black);
   -webkit-font-smoothing: antialiased;  //fontes mais nítidas e detalhadas
 }
 
