@@ -28,9 +28,19 @@ export default function Home() {
 
 }
 
-// export const getStaticProps = async () => {
-//   // const prismic = getPrismicClient({});
-//   // const postsResponse = await prismic.getByType(TODO);
+export const getStaticProps: GetStaticProps = async () => {
+  const prismic = getPrismicClient({});
+  const postsResponse = await prismic.getByType('posts', {
+    pageSize: 1
+  });
 
-//   // TODO
-// };
+  console.log("teste: ");
+  console.log(postsResponse);
+
+  return {
+    props: {
+      teste: "teste"
+    },
+    revalidate: 60 * 60 * 24,
+  };
+};
