@@ -1,1 +1,10 @@
-// TODO
+.headerContainer {
+	height: 7rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+.headerContent {
+	margin-left: 30%;
+}
