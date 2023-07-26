@@ -8,7 +8,7 @@ export interface PrismicConfig {
 
 export function getPrismicClient(config: PrismicConfig): prismic.Client {
   const client = prismic.createClient('SpaceTraveling', {
-    accessToken: process.env.PRISMIC_API_ENDPOINT
+    accessToken: process.env.ACCESS_TOKEN
   });
 
   // enableAutoPreviews({

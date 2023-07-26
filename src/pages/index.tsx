@@ -24,22 +24,52 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-export default function Home() {
+export default function Home({ postsPagination }: HomeProps) {
+  console.log(postsPagination);
 
+  return (
+    <main>
+      {
+        postsPagination.results.map((post) => (
+            <div>
+              <strong>{post.data.title}</strong>
+              <p>{post.data.subtitle}</p>
+              <time>{post.first_publication_date}</time>
+              <p>{post.data.author}</p>
+            </div>
+          )
+        )
+      }
+    </main>
+  );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient({});
   const postsResponse = await prismic.getByType('posts', {
-    pageSize: 1
+    pageSize: 2
   });
 
-  console.log("teste: ");
-  console.log(postsResponse);
+  const posts: Post[] = postsResponse.results.map((post) => {
+    return {
+      uid: post.uid,
+      first_publication_date: post.first_publication_date,
+      data: {
+        author: post.data.author,
+        subtitle: post.data.subtitle,
+        title: post.data.title
+      }
+    }
+  });
+
+  const postsPagination: PostPagination = {
+    next_page: postsResponse.next_page,
+    results: posts
+  }
 
   return {
     props: {
-      teste: "teste"
+      postsPagination
     },
     revalidate: 60 * 60 * 24,
   };
