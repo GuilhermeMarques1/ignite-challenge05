@@ -28,10 +28,10 @@ export default function Home({ postsPagination }: HomeProps) {
   console.log(postsPagination);
 
   return (
-    <main>
+    <main className={styles.contentContainer}>
       {
         postsPagination.results.map((post) => (
-            <div>
+            <div className={styles.postContainer} key={post.uid}>
               <strong>{post.data.title}</strong>
               <p>{post.data.subtitle}</p>
               <time>{post.first_publication_date}</time>
