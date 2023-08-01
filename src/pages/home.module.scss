@@ -8,9 +8,36 @@
   padding: 1.2rem 0;
 
   strong {
+    font-weight: 700px;
     font-size: 28px;
     color: var(--white);
   }
 
+  p {
+    margin-top: 0.8rem;
+    color: var(--gray-50);
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--gray-200);
+    margin-top: 1.8rem;
+    
+    time {
+      margin-right: 2rem;
+      font-size: 14px;
+    }
+
+    p {
+      margin-top: 0;
+      color: var(--gray-200);
+      font-size: 14px;
+    }
+  }
   
+  margin-bottom: 1.2rem;
 }
