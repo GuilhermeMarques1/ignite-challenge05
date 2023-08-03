@@ -30,6 +30,16 @@ interface HomeProps {
 export default function Home({ postsPagination }: HomeProps) {
   console.log(postsPagination);
 
+  const handleClick = async () => {
+    console.log("chamou!")
+
+    await fetch(postsPagination.next_page)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+
   return (
     <main className={styles.contentContainer}>
       {
@@ -57,6 +67,15 @@ export default function Home({ postsPagination }: HomeProps) {
           )
         )
       }
+      {
+        postsPagination.next_page ? (
+          <div className={styles.loadMore}>
+            <button onClick={() => handleClick}>
+              Carregar mais posts
+            </button>
+          </div>
+        ) : <></>
+      }
     </main>
   );
 }
@@ -64,7 +83,7 @@ export default function Home({ postsPagination }: HomeProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient({});
   const postsResponse = await prismic.getByType('posts', {
-    pageSize: 3
+    pageSize: 2
   });
 
   const posts: Post[] = postsResponse.results.map((post) => {

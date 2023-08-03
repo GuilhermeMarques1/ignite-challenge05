@@ -2,6 +2,15 @@
   width: 40%;
   margin: 0 auto;
   padding: 2rem 0;
+
+  .loadMore button {
+    margin-top: 3.2rem;
+    background: none;
+    border: none;
+    color: var(--pink);
+    font-size: 18px;
+    font-weight: 600;
+  }
 }
 
 .postContainer {
