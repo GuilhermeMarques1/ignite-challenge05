@@ -7,6 +7,7 @@ import { FiCalendar, FiUser } from "react-icons/fi";
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
+import { useState } from 'react';
 
 interface Post {
   uid?: string;
@@ -28,22 +29,22 @@ interface HomeProps {
 }
 
 export default function Home({ postsPagination }: HomeProps) {
-  console.log(postsPagination);
+  const [posts, setPosts] = useState(postsPagination.results);
+  const [nextPage, setNextPage] = useState<string | null>(postsPagination.next_page);
 
   const handleClick = async () => {
-    console.log("chamou!")
-
-    await fetch(postsPagination.next_page)
+    await fetch(nextPage)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setPosts([...posts, ...data.results]);
+        setNextPage(data.next_page);
       });
   }
 
   return (
     <main className={styles.contentContainer}>
       {
-        postsPagination.results.map((post) => (
+        posts.map((post) => (
             <div className={styles.postContainer} key={post.uid}>
               <strong>{post.data.title}</strong>
               <p>{post.data.subtitle}</p>
@@ -68,9 +69,9 @@ export default function Home({ postsPagination }: HomeProps) {
         )
       }
       {
-        postsPagination.next_page ? (
+        nextPage ? (
           <div className={styles.loadMore}>
-            <button onClick={() => handleClick}>
+            <button onClick={handleClick}>
               Carregar mais posts
             </button>
           </div>
@@ -83,7 +84,7 @@ export default function Home({ postsPagination }: HomeProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient({});
   const postsResponse = await prismic.getByType('posts', {
-    pageSize: 2
+    pageSize: 1
   });
 
   const posts: Post[] = postsResponse.results.map((post) => {
