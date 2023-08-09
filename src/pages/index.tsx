@@ -1,5 +1,7 @@
 import { GetStaticProps } from 'next';
 import { getPrismicClient } from '../services/prismic';
+import { useState } from 'react';
+import Link from 'next/link';
 
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
@@ -7,7 +9,6 @@ import { FiCalendar, FiUser } from "react-icons/fi";
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
-import { useState } from 'react';
 
 interface Post {
   uid?: string;
@@ -45,26 +46,28 @@ export default function Home({ postsPagination }: HomeProps) {
     <main className={styles.contentContainer}>
       {
         posts.map((post) => (
-            <div className={styles.postContainer} key={post.uid}>
-              <strong>{post.data.title}</strong>
-              <p>{post.data.subtitle}</p>
-              <div className={styles.info}>
-                <FiCalendar size={20}/>
-                <time>
-                  {
-                    format(
-                      new Date(post.first_publication_date),
-                      "d LLL y",
-                      {
-                        locale: ptBR
-                      }
-                    )
-                  }
-                </time>
-                <FiUser size={20}/>
-                <p>{post.data.author}</p>
+            <Link key={post.uid} href={`post/${post.uid}`}>
+              <div className={styles.postContainer}>
+                <strong>{post.data.title}</strong>
+                <p>{post.data.subtitle}</p>
+                <div className={styles.info}>
+                  <FiCalendar size={20}/>
+                  <time>
+                    {
+                      format(
+                        new Date(post.first_publication_date),
+                        "d LLL y",
+                        {
+                          locale: ptBR
+                        }
+                      )
+                    }
+                  </time>
+                  <FiUser size={20}/>
+                  <p>{post.data.author}</p>
+                </div>
               </div>
-            </div>
+            </Link>
           )
         )
       }
