@@ -29,12 +29,37 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps) {
+  // console.log(JSON.stringify(post, null, 2));
   console.log(post);
 
   return (
-    <>
-      Hello, World!
-    </>
+    <main>
+      <article>
+        <section>
+          <img src={post.data.banner.url} alt="imagem do post" />
+        </section>
+
+        <header>
+          <h1>{post.data.title}</h1>
+          <time>{post.first_publication_date}</time>
+          <p>
+            <span>{post.data.author}</span>
+          </p>
+          <time>4 min</time>
+        </header>
+        
+
+        <section>
+          <h2></h2>
+          <p></p>
+          <p></p>
+          <p></p>
+        </section>
+        <section>
+
+        </section>
+      </article>
+    </main>
   )
 }
 
@@ -53,7 +78,6 @@ export const getStaticProps = async ({ params }) => {
   const prismic = getPrismicClient({});
   const response = await prismic.getByUID('posts', slug);
 
-  // console.log(JSON.stringify(response, null, 2));
   const post = {
     first_publication_date: format(
       new Date(response.first_publication_date),
